@@ -1,0 +1,43 @@
+<!-- Loop over each object in the players array -->
+{{#each players as |player| }}
+<div class="row mb-4 player">
+  <div class="col-md-5">
+    <h1>
+     Movie Trivia
+    </h1>
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="{{game.image}}" alt="Movie image">
+  <div class="card-body">
+    <p class="card-text">{{game.title}}</p>
+   <p class="card-description">{{game.description}}</p>
+  </div>
+</div>
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="{{game.image}}" alt="Movie image">
+  <div class="card-body">
+    <p class="card-text">{{game.title}}</p>
+    <p class="card-description">{{game.description}}</p>
+  </div>
+</div>
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="{{game.image}}" alt="Movie image">
+  <div class="card-body">
+    <p class="card-text">{{game.title}}</p>
+    <p class="card-description">{{game.description}}</p>
+  </div>
+</div>
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="{{game.image}}" alt="Movie image">
+  <div class="card-body">
+    <p class="card-text">{{game.title}}</p>
+    <p class="card-description">{{game.description}}</p>
+  </div>
+</div>
+
+
+  </div>
+  <div class="col-md-7">
+      <p>Quote {{random.quote}}</p>
+  </div>
+</div>
+{{/each}}
