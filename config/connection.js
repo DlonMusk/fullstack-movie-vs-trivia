@@ -4,7 +4,8 @@ require('dotenv').config();
 let sequelize;
 
 // Create a connection object
-//adding JAWSDB add-on since we will be deploying an app with a db to heroku
+//add JAWSDB add-on 
+//since we will be deploying an app with a db to heroku
 if (process.env.JAWSDB_URL) {
   sequelize = new Sequelize(process.env.JAWSDB_URL);
 } else {
