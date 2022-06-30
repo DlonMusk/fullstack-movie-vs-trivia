@@ -1,7 +1,6 @@
 const { Game } = require('../models');
 
 //update to seeds file
-
 const gameData = [
   {
     movie_name: 'Thor Ragnarok',

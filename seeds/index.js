@@ -1,7 +1,7 @@
 const User = require('./userData');
 const Game = require('./gameData');
 
-//SAssociations
+//Associations
 User.hasMany(Game, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE'
