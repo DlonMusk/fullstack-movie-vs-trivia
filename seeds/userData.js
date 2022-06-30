@@ -1,5 +1,6 @@
 const { User } = require('../models');
 
+//Seeds
 const userData = [
   {
     "username": "Kane33",
