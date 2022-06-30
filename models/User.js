@@ -10,8 +10,6 @@ class User extends Model {
 }
 
 
-
-
 //define columns
 User.init(
     {
@@ -21,12 +19,10 @@ User.init(
             autoIncrement: true,
             primaryKey: true
         },
-
         name: {
             type: DataTypes.STRING,
             allowNull: false
         },
-
         email: {
             type: DataTypes.INTEGER,
             unique: true,
@@ -34,12 +30,10 @@ User.init(
                 isEmail: true,
             },
         },
-
         password: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-
         //password is automatically hashed before it is created
         hooks: {
             beforeCreate: async (newUserData) => {

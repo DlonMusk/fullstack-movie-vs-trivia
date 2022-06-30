@@ -11,19 +11,20 @@ Game.init(
             allowNull: false,
             autoIncrement: true
         },
-        
         name: {
             type: DataTypes.STRING,
             allowNull: false
         },
-
         high_score: { 
             type: DataTypes.INTEGER,
         },
-
         user_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            references: {
+                model: 'user',
+                key: 'id'
+            }
         },
         // Link to database connection
         sequelize,
