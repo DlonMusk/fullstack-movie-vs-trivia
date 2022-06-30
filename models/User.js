@@ -6,8 +6,8 @@ const bycrpt = require("bycrpt");
 class User extends Model {
     checkPassword(loginPw) {
         return bcrypt.compareSync(loginPw, this.password);
-    }
-}
+    };
+};
 
 
 //define columns
@@ -25,6 +25,7 @@ User.init(
         },
         email: {
             type: DataTypes.INTEGER,
+            // prevents duplicate email adress
             unique: true,
             validate: {
                 isEmail: true,
@@ -33,6 +34,10 @@ User.init(
         password: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            //checks password length
+            validate: {
+                len: [10],
+            },
         },
         //password is automatically hashed before it is created
         hooks: {
