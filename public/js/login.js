@@ -27,3 +27,7 @@ document
     .querySelector('.login-form')
     .addEventListener('submit', loginFormHandler);
 
+document
+    .querySelector('.style-sheet')
+    .setAttribute('href', '/css/login.css');
+

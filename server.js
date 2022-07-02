@@ -4,7 +4,7 @@ const session = require('express-session');
 const routes = require('./controllers');
 const exphbs = require('express-handlebars');
 const path = require('path');
-const helpers = require('./utils/helpers');
+//const helpers = require('./utils/helpers');
 
 // import sequelize and create new sequelize store
 const sequelize = require('./config/connection');
@@ -15,7 +15,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // create a new instance of handlebars and pass in helper functions
-const hbs = exphbs.create({helpers});
+const hbs = exphbs.create();
 
 // set our apps view engine to handlebars
 app.engine('handlebars', hbs.engine);
@@ -28,9 +28,7 @@ const sess = {
     resave: false,
     saveUninitialized: true,
     store: new sequelizeStore({
-        db: sequelize,
-        checkExpirationInterval: 1000 * 10,
-        expiration: 1000 * 120
+        db: sequelize
     })
 }
 
