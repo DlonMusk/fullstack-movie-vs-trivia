@@ -5,38 +5,12 @@ const withAuth = require('../utils/auth');
 // load game select screen
 router.get('/', withAuth, async (req, res) => {
     try {
-        const gamesData = await Game.findAll();
+        const gamesData = await Game.findAll({where: {user_id: req.session.user_id}});
 
-        if(gamesData.length > 0){
-            const games = gamesData.map(game => game.get({plain: true}));
+        if (gamesData.length > 0) {
+            const games = gamesData.map(game => game.get({ plain: true }));
             res.render('gameSelect', { games, logged_in: req.session.logged_in })
-        } else {
-
-            const user = await User.create({
-                name: 'rahn',
-                email: 'rahn@hotmail.com',
-                password: '12345678'
-            });
-
-            const game1 = await Game.create({
-                title: 'all time gross VS',
-                user_id: 1,
-                image: 'https://assets.nautil.us/5408_0678ca2eae02d542cc931e81b74de122.jpg'
-            });
-
-            const game2 = await Game.create({
-                title: 'Ratings VS',
-                user_id: 1,
-                image: 'https://m.media-amazon.com/images/M/MV5BMWFmYmRiYzMtMTQ4YS00NjA5LTliYTgtMmM3OTc4OGY3MTFkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg'
-            }) 
-
-            const gamesData = await Game.findAll({include: [{model: User}]});
-
-            const games = gamesData.map(game => game.get({plain: true}));
-
-            res.render('gameSelect', {games, logged_in: req.session.logged_in})
         }
-
 
     } catch (err) {
         res.status(500).json(err);
@@ -46,37 +20,49 @@ router.get('/', withAuth, async (req, res) => {
 
 // random data array, pass index as id
 // load game screen if logged in
-router.get('/game/:id', withAuth, async (req, res) => {
-    if(req.params.id == 1){
-        res.render('revenue');
+router.get('/game/:game', withAuth, async (req, res) => {
+    console.log('HERE', req.params.game);
+    if (req.params.game.trim() == 'Revenue') {
+        res.render('game', { revenue: true });
+    } else if( req.params.game == 'Raiting'){
+        res.render('game', {raiting: true} )
     }
+
+
 });
 
-router.get('/loss/:score/:id', withAuth, async (req, res) => {
+router.get('/loss/:score/:title', withAuth, async (req, res) => {
+    let index = 0;
     const score = req.params.score;
-    const id = req.params.id;
+    const title = req.params.title;
+
+    if(title == 'Revenue') index = 0;
+    else if(title == 'Raiting') index = 1;
 
     const userData = await User.findByPk(req.session.user_id, {
-        include: [{model: Game}]
+        include: [{ model: Game }]
     });
 
 
-    const user = userData.get({plain: true});
+    const user = userData.get({ plain: true });
 
-    const high_score = user.games[id-1].high_score;
+    console.log(user);
 
-    const gameToUpdate = await Game.findByPk(user.games[id-1].id);
-    if(score > high_score){
+    const high_score = user.games[index].high_score;
+
+    const gameToUpdate = await Game.findByPk(user.games[index].id);
+
+    if (score > high_score) {
         console.log(gameToUpdate);
         await gameToUpdate.update({
             high_score: score
         });
     }
 
-    const game = gameToUpdate.get({plain: true})
+    const game = gameToUpdate.get({ plain: true })
 
-    
-    res.render('loss', {username: user.name, high_score: game.high_score, score: req.params.score, game_id: id});
+
+    res.render('loss', { username: user.name, high_score: game.high_score, score: req.params.score, game_title: title });
 });
 
 router.get('/login', (req, res) => {

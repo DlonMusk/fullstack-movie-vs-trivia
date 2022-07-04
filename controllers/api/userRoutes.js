@@ -21,15 +21,15 @@ router.post('/', async (req, res) => {
         })
 
         // add games to user
-        const game1 = await Game.create({
-            title: 'Ratings VS',
-            user_id: req.session.user_id,
+        await Game.create({
+            title: 'Revenue',
+            user_id: userDataDb.dataValues.id,
             image: 'https://assets.nautil.us/5408_0678ca2eae02d542cc931e81b74de122.jpg'
         });
 
-        const game2 = await Game.create({
-            title: 'all time gross VS',
-            user_id: req.session.user_id,
+        await Game.create({
+            title: 'Raiting',
+            user_id: userDataDb.dataValues.id,
             image: 'https://m.media-amazon.com/images/M/MV5BMWFmYmRiYzMtMTQ4YS00NjA5LTliYTgtMmM3OTc4OGY3MTFkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg'
         })
 
