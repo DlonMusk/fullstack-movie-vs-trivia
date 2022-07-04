@@ -1,4 +1,4 @@
-//const { User } = require('../../models');
+
 // initialize the game variables
 let index = 0;
 
@@ -11,17 +11,33 @@ const nextImg = document.querySelector('.next-img');
 const nextTitle = document.querySelector('.next');
 
 
-// get user to set highscores and current score
+const shuffle = (array) => {
+    let currentIndex = array.length, randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+}
 
 
 // function to set up the data for the game
 const getData = async () => {
-    let movieArray = await fetch('https://imdb-api.com/en/API/BoxOfficeAllTime/k_ww4qr6yh', {
+    let movieArray = await fetch('https://imdb-api.com/en/API/BoxOfficeAllTime/k_3pe08o4k', {
         method: 'GET',
         redirect: 'follow'
     }).then(response => response.text())
         .then(result => JSON.parse(result).items)
-        .then(obj => obj)
+        .then(obj => shuffle(obj))
         .catch(err => console.error(err));
 
     return movieArray.map(movie => ({ id: movie.id, title: movie.title, year: movie.year, revenue: movie.worldwideLifetimeGross }));
@@ -38,7 +54,7 @@ const getData = async () => {
 
 const getImg = async (title, image) => {
 
-    await fetch(`https://imdb-api.com/en/API/SearchMovie/k_ww4qr6yh/${title}`, {
+    await fetch(`https://imdb-api.com/en/API/SearchMovie/k_3pe08o4k/${title}`, {
         method: 'GET',
         redirect: 'follow'
     }).then(response => response.text())
@@ -54,13 +70,13 @@ const getImg = async (title, image) => {
 
 
 
-const higher = () => {
+const higher = async () => {
     movies.then(movie => {
         const current = index;
         const next = index + 1
 
-        const currentMovieRevenue = movie[current].revenue.replace(/[^0-9.]/g, '')
-        const nextMovieRevenue = movie[next].revenue.replace(/[^0-9.]/g, '')
+        const currentMovieRevenue = Number(movie[current].revenue.replace(/[^0-9.]/g, ''))
+        const nextMovieRevenue = Number(movie[next].revenue.replace(/[^0-9.]/g, ''))
         if (nextMovieRevenue > currentMovieRevenue) {
             // change the win loss div to green and unhidden keep it up for 1 second before continuing
             if (movie[next + 1].title) {
@@ -77,10 +93,6 @@ const higher = () => {
 
                 getImg(movie[next + 1].title, nextImg);
                 nextTitle.innerHTML = movie[next + 1].title;
-            } else {
-                alert("YOU WON WOW");
-                // find user and set high score if it is new high score
-                document.location.replace(`/lossPage/:${index}`);
             }
 
             // increment index
@@ -89,44 +101,39 @@ const higher = () => {
 
         } else {
             // check user and set highscore and current score
-            document.location.replace(`/loss`);
-            alert("LOSE")
-
-
-
+            document.location.replace(`/loss/${index}/1`);
         }
 
     });
 }
 
-const lower = () => {
-    console.log(index)
+const lower = async () => {
+
     movies.then(movie => {
         const current = index;
         const next = index + 1
 
-        const currentMovieRevenue = movie[current].revenue.replace(/[^0-9.]/g, '')
-        const nextMovieRevenue = movie[next].revenue.replace(/[^0-9.]/g, '')
+        const currentMovieRevenue = Number(movie[current].revenue.replace(/[^0-9.]/g, ''))
+        const nextMovieRevenue = Number(movie[next].revenue.replace(/[^0-9.]/g, ''))
+        console.log('HELLO', currentMovieRevenue);
+        console.log(nextMovieRevenue);
         if (nextMovieRevenue < currentMovieRevenue) {
             // change the win loss div to green and unhidden keep it up for 1 second before continuing
 
-            // set current score
-            currentScore.innerHTML = `Score: ${index + 1}`;
-
-            // set current info to current nexts info
-            getImg(movie[next].title, currentImg);
-            currentTitle.innerHTML = movie[next].title;
-            currentRevenue.innerHTML = `Box Office: ${movie[next].revenue}`
-
-
-            // set next movies info to nexts next
             if (movie[next + 1].title) {
+                // set current score
+                currentScore.innerHTML = `Score: ${index + 1}`;
+
+                // set current info to current nexts info
+                getImg(movie[next].title, currentImg);
+                currentTitle.innerHTML = movie[next].title;
+                currentRevenue.innerHTML = `Box Office: ${movie[next].revenue}`
+
+
+                // set next movies info to nexts next
+
                 getImg(movie[next + 1].title, nextImg);
                 nextTitle.innerHTML = movie[next + 1].title;
-            } else {
-                alert("YOU WON WOW");
-                // find user and set high score if it is new high score
-                document.location.replace(`/lossPage/:${index}`);
             }
 
             // increment index
@@ -136,7 +143,7 @@ const lower = () => {
         } else {
             alert("LOSE")
 
-            document.location.replace('/loss');
+            document.location.replace(`/loss/${index}/1`);
 
         }
 
@@ -160,6 +167,7 @@ document
 
 // set up the game page
 const movies = getData();
+
 movies.then(movie => {
     currentTitle.innerHTML = movie[index].title;
     currentRevenue.innerHTML = `Box Office: ${movie[index].revenue}`
