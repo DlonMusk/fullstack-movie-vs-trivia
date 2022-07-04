@@ -1,10 +1,9 @@
-
 // initialize the game variables
 let index = 0;
 
 const currentImg = document.querySelector('.current-img');
 const currentTitle = document.querySelector('.current');
-const currentRevenue = document.querySelector('.current-revenue');
+const currentRaiting = document.querySelector('.current-revenue');
 const currentScore = document.querySelector('.current-score');
 
 const nextImg = document.querySelector('.next-img');
@@ -32,7 +31,7 @@ const shuffle = (array) => {
 
 // function to set up the data for the game
 const getData = async () => {
-    let movieArray = await fetch('https://imdb-api.com/en/API/BoxOfficeAllTime/k_ww4qr6yh', {
+    let movieArray = await fetch('https://imdb-api.com/en/API/Top250Movies/k_ww4qr6yh', {
         method: 'GET',
         redirect: 'follow'
     }).then(response => response.text())
@@ -40,7 +39,7 @@ const getData = async () => {
         .then(obj => shuffle(obj))
         .catch(err => console.error(err));
 
-    return movieArray.map(movie => ({ id: movie.id, title: movie.title, year: movie.year, revenue: movie.worldwideLifetimeGross }));
+    return movieArray.map(movie => ({ id: movie.id, title: movie.title, year: movie.year, raiting: movie.imDbRating }));
 
 }
 
@@ -75,9 +74,9 @@ const higher = async () => {
         const current = index;
         const next = index + 1
 
-        const currentMovieRevenue = Number(movie[current].revenue.replace(/[^0-9.]/g, ''))
-        const nextMovieRevenue = Number(movie[next].revenue.replace(/[^0-9.]/g, ''))
-        if (nextMovieRevenue >= currentMovieRevenue) {
+        const currentMovieRaiting = Number(movie[current].raiting)
+        const nextMovieRaiting = Number(movie[next].raiting)
+        if (nextMovieRaiting >= currentMovieRaiting) {
             // change the win loss div to green and unhidden keep it up for 1 second before continuing
             if (movie[next + 1].title) {
                 // set current score
@@ -86,7 +85,7 @@ const higher = async () => {
                 // set current info to current nexts info
                 getImg(movie[next].title, currentImg);
                 currentTitle.innerHTML = movie[next].title;
-                currentRevenue.innerHTML = `Box Office: ${movie[next].revenue}`
+                currentRaiting.innerHTML = `Box Office: ${movie[next].raiting}`
 
 
                 // set next movies info to nexts next
@@ -101,7 +100,8 @@ const higher = async () => {
 
         } else {
             // check user and set highscore and current score
-            document.location.replace(`/loss/${index}/Revenue`);
+            alert('LOSS');
+            document.location.replace(`/loss/${index}/Raiting`);
         }
 
     });
@@ -113,11 +113,11 @@ const lower = async () => {
         const current = index;
         const next = index + 1
 
-        const currentMovieRevenue = Number(movie[current].revenue.replace(/[^0-9.]/g, ''))
-        const nextMovieRevenue = Number(movie[next].revenue.replace(/[^0-9.]/g, ''))
-        console.log('HELLO', currentMovieRevenue);
-        console.log(nextMovieRevenue);
-        if (nextMovieRevenue <= currentMovieRevenue) {
+        const currentMovieRaiting = Number(movie[current].raiting)
+        const nextMovieRaiting = Number(movie[next].raiting)
+        console.log('HELLO', currentMovieRaiting);
+        console.log(nextMovieRaiting);
+        if (nextMovieRaiting <= currentMovieRaiting) {
             // change the win loss div to green and unhidden keep it up for 1 second before continuing
 
             if (movie[next + 1].title) {
@@ -127,7 +127,7 @@ const lower = async () => {
                 // set current info to current nexts info
                 getImg(movie[next].title, currentImg);
                 currentTitle.innerHTML = movie[next].title;
-                currentRevenue.innerHTML = `Box Office: ${movie[next].revenue}`
+                currentRaiting.innerHTML = `Box Office: ${movie[next].raiting}`
 
 
                 // set next movies info to nexts next
@@ -143,7 +143,7 @@ const lower = async () => {
         } else {
             alert("LOSE")
 
-            document.location.replace(`/loss/${index}/Revenue`);
+            document.location.replace(`/loss/${index}/raiting`);
 
         }
 
@@ -170,7 +170,7 @@ const movies = getData();
 
 movies.then(movie => {
     currentTitle.innerHTML = movie[index].title;
-    currentRevenue.innerHTML = `Box Office: ${movie[index].revenue}`
+    currentRaiting.innerHTML = `Box Office: ${movie[index].raiting}`
     getImg(movie[index].title, currentImg);
 });
 

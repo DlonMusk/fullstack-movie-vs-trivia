@@ -3,12 +3,12 @@ const routeToHome = () => {
 }
 
 const routeToPlayAgain = () => {
-    document.location.replace(`/game/${game_id}`)
+    document.location.replace(`/game/${game_title}`)
 }
 
-const game_id = document
-    .querySelector('.game-id')
-    .getAttribute('data-gameId');
+const game_title = document
+    .querySelector('.game-title')
+    .getAttribute('data-gameTitle').trim();
 
 document
     .querySelector('.play-again')
