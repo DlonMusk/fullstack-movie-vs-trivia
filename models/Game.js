@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Game extends Model {}
+class Game extends Model { }
 
 //define columns
 Game.init(
@@ -9,29 +9,41 @@ Game.init(
         id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            primaryKey: true,
             autoIncrement: true
         },
-        name: {
+        title: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        high_score: { 
+        high_score: {
             type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        current_score: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
         },
         user_id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'user',
                 key: 'id'
             }
         },
+        image: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+    },
+    {
         // Link to database connection
         sequelize,
         timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'Game',
+        modelName: 'game',
     });
 
 module.exports = Game;

@@ -1,17 +1,18 @@
 // import router and user model
 const router = require('express').Router();
-const { User } = require('../../models/index');
+const { User } = require('../../models');
 
 // route to sign up a new user and save information to the session
 router.post('/', async (req, res) => {
     try{
+        console.log('IN ROUTE SIGNUP')
         const userDataDb = await User.create({
             name: req.body.name,
             email: req.body.email,
             password: req.body.password
         });
 
-
+        console.log("IN SIGNUP ROUTE")
         req.session.save(() => {
             req.session.logged_in = true,
             req.session.user_id = userDataDb.dataValues.id,

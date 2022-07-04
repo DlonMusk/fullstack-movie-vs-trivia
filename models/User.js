@@ -1,63 +1,63 @@
-const { Model, DataTypes } = require('sequelize');
+// import statements
+const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/connection');
-const bycrpt = require("bycrpt");
+const bcrypt = require('bcrypt');
 
-//Create a sequelize model for User
-class User extends Model {
+// create the model
+class User extends Model{
     checkPassword(loginPw) {
         return bcrypt.compareSync(loginPw, this.password);
-    };
+    }
 };
 
-
-//define columns
+// initialize the model
 User.init(
     {
         id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false
         },
         email: {
-            type: DataTypes.INTEGER,
-            // prevents duplicate email adress
+            type: DataTypes.STRING,
+            allowNull: false,
             unique: true,
             validate: {
-                isEmail: true,
-            },
+                isEmail: true
+            }
         },
         password: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
-            //checks password length
             validate: {
-                len: [10],
-            },
-        },
-        //password is automatically hashed before it is created
+                len: [8]
+            }
+        }
+    },
+    {
         hooks: {
-            beforeCreate: async (newUserData) => {
+            async beforeCreate(newUserData){
                 newUserData.password = await bcrypt.hash(newUserData.password, 10);
                 return newUserData;
             },
-            beforeUpdate: async (updatedUserData) => {
+
+            async beforeUpdate(updatedUserData){
                 updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
                 return updatedUserData;
-            },
+            }
         },
-        // Link to database connection
         sequelize,
         timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'User',
-    });
+        modelName: 'user'
+    }
+)
 
+// export the model
 module.exports = User;
-
-
