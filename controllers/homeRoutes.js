@@ -23,9 +23,9 @@ router.get('/', withAuth, async (req, res) => {
 router.get('/game/:game', withAuth, async (req, res) => {
     console.log('HERE', req.params.game);
     if (req.params.game.trim() == 'Revenue') {
-        res.render('game', { revenue: true });
-    } else if( req.params.game == 'Raiting'){
-        res.render('game', {raiting: true} )
+        res.render('game', { revenue: true, logged_in: req.session.logged_in });
+    } else if( req.params.game == 'Rating'){
+        res.render('game', { rating: true, logged_in: req.session.logged_in } )
     }
 
 
@@ -37,7 +37,7 @@ router.get('/loss/:score/:title', withAuth, async (req, res) => {
     const title = req.params.title;
 
     if(title == 'Revenue') index = 0;
-    else if(title == 'Raiting') index = 1;
+    else if(title == 'Rating') index = 1;
 
     const userData = await User.findByPk(req.session.user_id, {
         include: [{ model: Game }]
@@ -62,7 +62,7 @@ router.get('/loss/:score/:title', withAuth, async (req, res) => {
     const game = gameToUpdate.get({ plain: true })
 
 
-    res.render('loss', { username: user.name, high_score: game.high_score, score: req.params.score, game_title: title });
+    res.render('loss', { username: user.name, high_score: game.high_score, score: req.params.score, game_title: title, logged_in: req.session.logged_in });
 });
 
 router.get('/login', (req, res) => {

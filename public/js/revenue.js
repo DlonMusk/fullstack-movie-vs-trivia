@@ -1,11 +1,11 @@
-
 // initialize the game variables
 let index = 0;
 
 const currentImg = document.querySelector('.current-img');
 const currentTitle = document.querySelector('.current');
-const currentRevenue = document.querySelector('.current-revenue');
+const currentRevenue = document.querySelector('.current-stat');
 const currentScore = document.querySelector('.current-score');
+currentScore.innerHTML = 'Score: 0';
 
 const nextImg = document.querySelector('.next-img');
 const nextTitle = document.querySelector('.next');
@@ -115,8 +115,7 @@ const lower = async () => {
 
         const currentMovieRevenue = Number(movie[current].revenue.replace(/[^0-9.]/g, ''))
         const nextMovieRevenue = Number(movie[next].revenue.replace(/[^0-9.]/g, ''))
-        console.log('HELLO', currentMovieRevenue);
-        console.log(nextMovieRevenue);
+
         if (nextMovieRevenue <= currentMovieRevenue) {
             // change the win loss div to green and unhidden keep it up for 1 second before continuing
 
