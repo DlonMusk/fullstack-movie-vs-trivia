@@ -1,6 +1,6 @@
 // import router and user model
 const router = require('express').Router();
-const { User, Game } = require('../../models');
+const { User, Game } = require('../../models/index');
 
 // route to sign up a new user and save information to the session
 router.post('/', async (req, res) => {
