@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
         });
 
         await Game.create({
-            title: 'Raiting',
+            title: 'Rating',
             user_id: userDataDb.dataValues.id,
             image: 'https://m.media-amazon.com/images/M/MV5BMWFmYmRiYzMtMTQ4YS00NjA5LTliYTgtMmM3OTc4OGY3MTFkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg'
         })
