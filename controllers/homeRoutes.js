@@ -31,6 +31,7 @@ router.get('/game/:game', withAuth, async (req, res) => {
 
 });
 
+// router for loss screen, will display score and update highscore if needed
 router.get('/loss/:score/:title', withAuth, async (req, res) => {
     let index = 0;
     const score = req.params.score;

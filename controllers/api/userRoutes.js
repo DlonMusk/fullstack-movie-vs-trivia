@@ -24,13 +24,13 @@ router.post('/', async (req, res) => {
         await Game.create({
             title: 'Revenue',
             user_id: userDataDb.dataValues.id,
-            image: 'https://assets.nautil.us/5408_0678ca2eae02d542cc931e81b74de122.jpg'
+            image: 'https://m.media-amazon.com/images/M/MV5BMWFmYmRiYzMtMTQ4YS00NjA5LTliYTgtMmM3OTc4OGY3MTFkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg'
         });
 
         await Game.create({
             title: 'Rating',
             user_id: userDataDb.dataValues.id,
-            image: 'https://m.media-amazon.com/images/M/MV5BMWFmYmRiYzMtMTQ4YS00NjA5LTliYTgtMmM3OTc4OGY3MTFkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg'
+            image: 'https://upload.wikimedia.org/wikipedia/en/9/92/2001_A_Space_Odyssey_%28soundtrack%29.jpeg'
         })
 
     } catch (err) {

@@ -1,10 +1,17 @@
-<div class="row">
-  <div class="col-md-6">
+<style>
+  p, h2{
+    font-size: 20px;
+    padding: 10px;
+  }
+</style>
+
+<div class="row justify-content-around g-2 m-3 text-center">
+  <div class="card" style="width:400px; padding: 0; background-color:rgba(240, 248, 255, 0.374);">
     <h2>SCORE: {{score}}</h2>
     <p>Congrats {{username}}</p>
     <p>High Score: {{high_score}}</p>
-    <button class="play-again">Play Again</button>
-    <button class="home-page">Home Page</button>
+    <button class="play-again btn btn-primary" style="margin-bottom: 5px;">Play Again</button>
+    <button class="home-page btn btn-secondary">Home Page</button>
     <div class="game-title" data-gameTitle="{{game_title}}"></div>
   </div>
 </div>

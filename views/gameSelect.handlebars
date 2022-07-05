@@ -1,17 +1,12 @@
 <!-- Loop over each object in the players array -->
 
-<div class="row mb-4">
-  <div class="col-md-5">
-    <h1>
-      Movie Trivia
-    </h1>
-    <div class="col-12">
-      {{#each games as |game| }}
-      {{> gameCard }}
-      {{/each}}
-    </div>
+<div class="row justify-content-around g-2 text-center" style="margin-top: 200px;">
 
-  </div>
+  {{#each games as |game| }}
+  {{> gameCard }}
+  {{/each}}
+
+
 </div>
 
 <script src="/js/homePage.js"></script>

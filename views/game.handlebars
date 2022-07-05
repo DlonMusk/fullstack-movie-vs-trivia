@@ -1,21 +1,28 @@
-<div class="card" style="width: 18rem;">
+
+<p class="current-score text-center"></p>
+<p class="vs-text text-center">VS</p>
+
+<div class="row justify-content-around g-2 text-center">
+
+<div class="current-card card col-3" style="width: 18rem; padding: 0; color: black; background-color:rgba(240, 248, 255, 0.374)">
   <img class="card-img-top current-img" alt="Movie image" width="300px" height="300px">
-  <div class="card-body">
+  <div class="card-body" style="font-size: 20px; margin-top: 10px">
     <p class="card-text current"></p>
     <p class="card-text current-stat"></p>
   </div>
 </div>
 
-<p class="high-score"></p>
-<p class="current-score"></p>
 
-<div class="card" style="width: 18rem;">
+
+<div class="next-card card col-3" style="width: 18rem; padding: 0; color: black; background-color:rgba(240, 248, 255, 0.374)">
   <img class="card-img-top next-img" alt="Movie image" width="300px" height="300px">
   <div class="card-body">
-    <p class="card-text next"></p>
+    <p class="card-text next" style="font-size: 20px;"></p>
   </div>
-  <button class="higher">HIGHER</button>
-  <button class="lower">LOWER</button>
+  <button class="higher btn btn-primary" style="margin: 5px;">HIGHER</button>
+  <button class="lower btn btn-danger" style="margin: 5px;">LOWER</button>
+</div>
+
 </div>
 
 {{#if revenue}}

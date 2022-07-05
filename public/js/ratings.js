@@ -10,7 +10,7 @@ currentScore.innerHTML = 'Score: 0';
 const nextImg = document.querySelector('.next-img');
 const nextTitle = document.querySelector('.next');
 
-
+// function to shuffle game data array
 const shuffle = (array) => {
     let currentIndex = array.length, randomIndex;
 
