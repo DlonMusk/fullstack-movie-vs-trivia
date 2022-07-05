@@ -33,10 +33,11 @@ Follow these steps to install this project on your local machine.
 
 ## Application
 - Link to Deployed Application
-- 
+- https://serene-carlsbad-caverns-28814.herokuapp.com/login
 
 ## Images
-- ![MovieVsTrivia](./assets/)
+- ![MovieVsTrivia](./assets/gamepage.png)
+- ![MovieVsTrivia](./assets/homepage.png)
 
 ## Questions
 - GitHub: https://github.com/Altheahanson
