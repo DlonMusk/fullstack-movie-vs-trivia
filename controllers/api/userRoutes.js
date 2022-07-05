@@ -1,24 +1,38 @@
 // import router and user model
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Game } = require('../../models/index');
 
 // route to sign up a new user and save information to the session
 router.post('/', async (req, res) => {
     try{
-        console.log('IN ROUTE SIGNUP')
+
         const userDataDb = await User.create({
             name: req.body.name,
             email: req.body.email,
             password: req.body.password
-        });
+        }); 
 
-        console.log("IN SIGNUP ROUTE")
+
         req.session.save(() => {
             req.session.logged_in = true,
             req.session.user_id = userDataDb.dataValues.id,
             req.session.username = userDataDb.dataValues.name,
             res.status(200).json(userDataDb)
         })
+
+        // add games to user
+        await Game.create({
+            title: 'Revenue',
+            user_id: userDataDb.dataValues.id,
+            image: 'https://m.media-amazon.com/images/M/MV5BMWFmYmRiYzMtMTQ4YS00NjA5LTliYTgtMmM3OTc4OGY3MTFkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg'
+        });
+
+        await Game.create({
+            title: 'Rating',
+            user_id: userDataDb.dataValues.id,
+            image: 'https://upload.wikimedia.org/wikipedia/en/9/92/2001_A_Space_Odyssey_%28soundtrack%29.jpeg'
+        })
+
     } catch (err) {
         res.status(500).json(err);
     }

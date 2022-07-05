@@ -1,0 +1,19 @@
+.current-score {
+    margin: 0 auto;
+    position: relative;
+    top: 15px;
+    font-size: 40px;
+}
+
+.vs-text {
+    margin: 0 auto;
+    position: relative;
+    top: 200px;
+    font-size: 50px;
+}
+
+.current-card, .next-card{
+    transform: scale(1.3);
+}
+
+
